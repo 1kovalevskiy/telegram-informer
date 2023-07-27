@@ -63,14 +63,14 @@ application = (
 )
 
 application.add_handler(CommandHandler("start", start))
-application.add_handler(TypeHandler(type=MessageBase, callback=webhook_update))
+application.add_handler(TypeHandler(type=MessageSend, callback=webhook_update))
 
 
 async def send_message(
     message: str,
 ):
     await application.update_queue.put(
-        MessageBase(user=settings.admin_chat_id, message=message)
+        MessageSend(user=settings.admin_chat_id, message=message)
     )
 
 

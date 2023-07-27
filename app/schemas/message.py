@@ -7,4 +7,4 @@ class MessageBase(BaseModel):
 
 
 class MessageSend(MessageBase):
-    service: str
+    service: str = 'telegram_informer'
