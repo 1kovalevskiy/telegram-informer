@@ -12,7 +12,7 @@ from telegram.ext import (
 )
 
 from app.core.config import settings
-from app.schemas.message import MessageBase
+from app.schemas.message import MessageSend
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -34,7 +34,7 @@ class CustomContext(CallbackContext[ExtBot, dict, dict, dict]):
         update: object,
         app: Application,
     ) -> "CustomContext":
-        if isinstance(update, MessageBase):
+        if isinstance(update, MessageSend):
             return cls(application=app)
         return super().from_update(update, app)
 
@@ -44,10 +44,11 @@ async def start(update: Update) -> None:
     await update.message.reply_html(text=text)
 
 
-async def webhook_update(update: MessageBase, context: CustomContext) -> None:
+async def webhook_update(update: MessageSend, context: CustomContext) -> None:
+    text = f'**From: {update.service}**\n{update.message}'
     await context.bot.send_message(
         chat_id=update.user,
-        text=update.message,
+        text=text,
         parse_mode=ParseMode.HTML,
     )
 
