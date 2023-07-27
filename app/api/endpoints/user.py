@@ -1,6 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 
-from app.core.user import fastapi_users, auth_backend_user
+from app.core.user import fastapi_users, auth_backend_user, current_superuser
 from app.schemas.user import UserRead, UserCreate, UserUpdate
 
 
@@ -12,12 +12,12 @@ router.include_router(
     prefix="/auth/jwt",
     tags=["auth"],
 )
-# router.include_router(
-#     fastapi_users.get_register_router(UserRead, UserCreate),
-#     prefix="/auth",
-#     tags=["auth"],
-#     include_in_schema=False
-# )
+router.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate),
+    prefix="/auth",
+    tags=["auth"],
+    dependencies=[Depends(current_superuser)],
+)
 # router.include_router(
 #     fastapi_users.get_reset_password_router(),
 #     prefix="/auth",
