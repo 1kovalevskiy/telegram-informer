@@ -15,12 +15,12 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }} # Если ваш ssh-ключ защищён фразой-паролем
         script: |
-          git clone https://github.com/1kovalevskiy/telegram-informer.git
+          git clone https://github.com/1kovalevskiy/telegram-informer.git || true
           cd /home/nikita/telegram-informer
           ${{ secrets.ENV }} > .env
           git pull
           cd /home/nikita/telegram-informer/infra
-          sudo docker stop $(sudo docker ps -a -q)
+          sudo docker stop $(sudo docker ps -a -q) || true
           sudo docker-compose up --build -d 
 
   send_message:
