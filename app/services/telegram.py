@@ -45,7 +45,7 @@ async def start(update: Update) -> None:
 
 
 async def webhook_update(update: MessageSend, context: CustomContext) -> None:
-    text = f'**From: {update.service}**\n{update.message}'
+    text = f'<b>From: {update.service}</b>\n\n{update.message}'
     await context.bot.send_message(
         chat_id=update.user,
         text=text,
