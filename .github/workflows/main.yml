@@ -17,7 +17,6 @@ jobs:
         script: |
           git clone https://github.com/1kovalevskiy/telegram-informer.git || true
           cd /home/nikita/telegram-informer
-          ${{ secrets.ENV }} > .env
           git pull
           cd /home/nikita/telegram-informer/infra
           sudo docker stop $(sudo docker ps -a -q) || true
