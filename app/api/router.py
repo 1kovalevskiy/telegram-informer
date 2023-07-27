@@ -1,7 +1,10 @@
 from fastapi import APIRouter
 
 from app.api.endpoints import (
-    message_router, service_router, telegram_router, user_router
+    message_router,
+    service_router,
+    telegram_router,
+    user_router,
 )
 from app.core.config import settings
 

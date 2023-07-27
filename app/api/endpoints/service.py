@@ -31,9 +31,7 @@ async def add_new_service(
     exist_service = await service_crud.get_by_name(
         service_name=service.name, session=session
     )
-    await send_message(
-        f'Try create service token for `{service.name}`'
-    )
+    await send_message(f"Try create service token for `{service.name}`")
     if exist_service:
         raise HTTPException(status_code=403, detail="Service exist")
     new_token = create_access_token(service_name=service.name)
@@ -58,9 +56,7 @@ async def update_token(
     )
     if not exist_service:
         raise HTTPException(status_code=404, detail="Service doesn't exist")
-    await send_message(
-        f'Try update service token for `{service.name}`'
-    )
+    await send_message(f"Try update service token for `{service.name}`")
     new_token = create_access_token(service_name=service.name)
     service = ServiceUpdate(token=new_token, return_token=service.return_token)
     patch_service = await service_crud.update(exist_service, service, session)
