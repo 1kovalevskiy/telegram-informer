@@ -20,8 +20,12 @@ jobs:
           cd /home/nikita/telegram-informer
           git pull
           cd /home/nikita/telegram-informer/infra
+          sudo systemctl stop telegram-informer.service
+          sudo docker-compose down
           sudo docker stop $(sudo docker ps -a -q) || true
-          sudo docker-compose up --build -d 
+          sudo docker-compose build --parallel
+          sudo systemctl start telegram-informer.service
+          sudo docker container prune -f
 
   send_message:
     runs-on: ubuntu-latest
