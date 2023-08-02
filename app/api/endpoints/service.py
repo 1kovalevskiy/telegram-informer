@@ -31,7 +31,7 @@ async def add_new_service(
     exist_service = await service_crud.get_by_name(
         service_name=service.name, session=session
     )
-    await send_message(f"Try create service token for `{service.name}`")
+    await send_message(f"{user.email} create service token for `{service.name}`")
     if exist_service:
         raise HTTPException(status_code=403, detail="Service exist")
     new_token = create_access_token(service_name=service.name)
